@@ -3,7 +3,7 @@ const std = @import("std");
 pub fn main() !void {
     //var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
     //defer arena.deinit();
-    const path = "input.txt";
+    const path = "testdata/01.txt";
     const input = try std.fs.cwd().openFile(path, .{});
     var buf: [std.mem.page_size]u8 = undefined;
     var array = std.ArrayList(usize).init(std.heap.page_allocator);

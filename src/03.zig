@@ -5,7 +5,7 @@ const test_allocator = std.testing.allocator;
 pub fn main() !void {
     //var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
     //defer arena.deinit();
-    const path = "input.txt";
+    const path = "testdata/03.txt";
     const input = try std.fs.cwd().openFile(path, .{});
     var buf: [std.mem.page_size]u8 = undefined;
     var list = ArrayList(u8).init(test_allocator);
