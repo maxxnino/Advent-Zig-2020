@@ -7,12 +7,7 @@ pub fn main() !void {
     try part1();
     try part2();
 }
-const Operation = enum {
-    nop,
-    acc,
-    jmp,
-};
-const Intruction = union(Operation) {
+const Intruction = union(enum) {
     nop: i32,
     acc: i32,
     jmp: i32,
@@ -30,23 +25,17 @@ pub fn getData(program: *ArrayList(Step)) !void {
         var it = std.mem.tokenize(line, " ");
         const ops = it.next().?;
         const value = try std.fmt.parseInt(i32, it.next().?, 10);
-        if (eqlString(ops, "nop")) {
-            try program.append(Step{
+        const tag_intruction = std.meta.stringToEnum(@typeInfo(Intruction).Union.tag_type.?, ops).?;
+        switch (tag_intruction) {
+            .nop => try program.append(Step{
                 .instruction = Intruction{ .nop = value },
-            });
-            continue;
-        }
-        if (eqlString(ops, "acc")) {
-            try program.append(Step{
+            }),
+            .acc => try program.append(Step{
                 .instruction = Intruction{ .acc = value },
-            });
-            continue;
-        }
-        if (eqlString(ops, "jmp")) {
-            try program.append(Step{
+            }),
+            .jmp => try program.append(Step{
                 .instruction = Intruction{ .jmp = value },
-            });
-            continue;
+            }),
         }
     }
 }
