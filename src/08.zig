@@ -25,7 +25,7 @@ pub fn getData(program: *ArrayList(Step)) !void {
         var it = std.mem.tokenize(line, " ");
         const ops = it.next().?;
         const value = try std.fmt.parseInt(i32, it.next().?, 10);
-        const tag_intruction = std.meta.stringToEnum(@typeInfo(Intruction).Union.tag_type.?, ops).?;
+        const tag_intruction = std.meta.stringToEnum(std.meta.Tag(Intruction), ops).?;
         switch (tag_intruction) {
             .nop => try program.append(Step{
                 .instruction = Intruction{ .nop = value },
